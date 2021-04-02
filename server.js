@@ -5,6 +5,11 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
+//body-parser is deprecated
+// const bodyParser = require('body-parser');
+
+const indexRouter = require('./routes/index');
+const authorRouter = require('./routes/authors');
 
 //set view engine
 app.set('view engine', 'ejs');
@@ -16,9 +21,12 @@ app.set('layout', 'layouts/layout');
 app.use(expressLayouts);
 //where are public files will be
 app.use(express.static('public'));
+// app.use(bodyParser.urlencoded({ limit: '10mb', extended: false })); deprecated dont use
+app.use(express.urlencoded({ limit: '10mb', extended: false }));
 
 //Set up mongoose
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -27,8 +35,8 @@ const db = mongoose.connection;
 db.on('error', (error) => console.log(error));
 db.once('open', () => console.log('Connected to Mongoose'));
 
-const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
+app.use('/authors', authorRouter);
 
 //setting deployed and development port
 app.listen(process.env.PORT || 3000);
