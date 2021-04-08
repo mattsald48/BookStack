@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+//path to where all cover images will be stored
+const coverImageBasePath = 'uploads/bookCovers';
+
 const bookSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -8,7 +11,7 @@ const bookSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  publishedDate: {
+  publishDate: {
     type: Date,
     required: true,
   },
@@ -19,16 +22,16 @@ const bookSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     required: true,
-    default: Date.now,
+    default: Date.now(),
   },
   coverImageName: {
     type: String,
     required: true,
   },
-  isRead: {
-    type: Boolean,
-    default: false,
-  },
+  // isRead: {
+  //   type: Boolean,
+  //   default: false,
+  // },
   author: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -37,3 +40,4 @@ const bookSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Book', bookSchema);
+module.exports.coverImageBasePath = coverImageBasePath;

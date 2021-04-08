@@ -1,7 +1,8 @@
 <h2>
   Add to the Stack
 </h2>
-    <form action="/books" method="POST">
+<!-- enctype needs to be changed to multipart/form-data to handel file upload -->
+    <form action="/books" method="POST" enctype="multipart/form-data">
         <%- include('_form_fields')%>
         <a href="/books">Cancel</a>
         <button type="submit">Create</button>
