@@ -7,6 +7,7 @@ const app = express();
 const expressLayouts = require('express-ejs-layouts');
 //body-parser is deprecated
 // const bodyParser = require('body-parser');
+const methodOverride = require('method-override');
 
 //Bringing in Routes from route folder
 const indexRouter = require('./routes/index');
@@ -21,6 +22,7 @@ app.set('views', __dirname + '/views');
 app.set('layout', 'layouts/layout');
 //Use express layouts
 app.use(expressLayouts);
+app.use(methodOverride('_method'));
 //where are public files will be
 app.use(express.static('public'));
 // app.use(bodyParser.urlencoded({ limit: '10mb', extended: false })); deprecated dont use
