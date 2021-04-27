@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Author = require('../models/author');
+const Book = require('../models/book');
 
 //Return ALL authors
 router.get('/', async (req, res) => {
@@ -41,8 +42,18 @@ router.post('/', async (req, res) => {
 });
 
 //Getting an author
-router.get('/:id', (req, res) => {
-  res.send('Show Authhor ' + req.params.id);
+router.get('/:id', async (req, res) => {
+  try {
+    const author = await Author.findById(req.params.id);
+    const books = await Book.find({ author: author.id }).limit(6).exec();
+    res.render('authors/show', {
+      author: author,
+      booksByAuthor: books,
+    });
+  } catch (err) {
+    console.log(err);
+    res.redirect('/');
+  }
 });
 
 //Getting to the edit page of an author
@@ -52,7 +63,7 @@ router.get('/:id/edit', async (req, res) => {
     res.render('authors/edit', { author: author });
   } catch {
     console.log('Whoops');
-    //res.redirect(`/authors`);
+    res.redirect(`/authors`);
   }
 });
 
