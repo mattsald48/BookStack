@@ -16,6 +16,9 @@ router.get('/', async (req, res) => {
   if (req.query.publishedAfter != null && req.query.publishedAfter != '') {
     query = query.gte('publishDate', req.query.publishedAfter);
   }
+  if (req.query.completedBooks === 'completed') {
+    query = query.where('isRead').eq(true);
+  }
 
   try {
     const books = await query.exec();
