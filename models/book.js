@@ -40,6 +40,7 @@ const bookSchema = new mongoose.Schema({
   },
 });
 
+//coverts stored buffer from coverImage into a usable string for display
 bookSchema.virtual('coverImagePath').get(function () {
   if (this.coverImage != null && this.coverImageType != null) {
     return `data:${

@@ -77,6 +77,7 @@ async function renderNewPage(res, book, hasError = false) {
   }
 }
 
+//Takes book object and cover image encoded by filepond and adds it to book object
 function saveCover(book, coverEncoded) {
   if (coverEncoded == null) return;
   const cover = JSON.parse(coverEncoded);

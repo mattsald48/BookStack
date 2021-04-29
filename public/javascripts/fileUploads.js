@@ -1,3 +1,4 @@
+//Registering filepond plugins being used
 FilePond.registerPlugin(
   FilePondPluginImagePreview,
   FilePondPluginImageResize,
@@ -10,4 +11,5 @@ FilePond.setOptions({
   imageResizeTargetHeight: 150,
 });
 
+//Turn all file inputs on page into filepond inputs
 FilePond.parse(document.body);
