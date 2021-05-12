@@ -1,10 +1,17 @@
 @import 'shared/fonts.css';
 @import 'shared/variables.css';
+@import 'shared/header.css';
 
 :root {
   font-family: 'Gotham Rounded';
   font-size: 20px;
   color: var(--color-text-light);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -13,4 +20,14 @@ body {
     var(--color-background-dark),
     var(--color-background-light)
   );
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  margin-bottom: 3rem;
+}
+
+.inner-container {
+  margin: 0 2rem;
 }
