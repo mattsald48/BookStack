@@ -44,7 +44,7 @@ router.post('/', async (req, res) => {
     publishDate: new Date(req.body.publishDate),
     pageCount: parseInt(req.body.pageCount),
     description: req.body.description,
-    //May add in completed book functionality here too
+    //May add in completed book functionality here too. App is for unread books so I don't think it should be an option at this point
   });
 
   saveCover(book, req.body.cover);

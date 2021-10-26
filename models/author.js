@@ -6,6 +6,10 @@ const authorSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  isDemo: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 //the pre() Wil run any function before the designated call is made. In this case the remove.
@@ -15,7 +19,11 @@ authorSchema.pre('remove', function (next) {
     if (err) {
       next(err);
     } else if (books.length > 0) {
-      next(new Error('This currently has books assigned'));
+      next(
+        new Error(
+          'To Delete This Author All Linked Books Must First Be Removed'
+        )
+      );
     } else {
       next();
     }

@@ -4,10 +4,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 const express = require('express');
 const app = express();
+
 const expressLayouts = require('express-ejs-layouts');
 //body-parser is deprecated
-// const bodyParser = require('body-parser');
+//const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
+const cron = require('node-cron');
 
 //Bringing in Routes from route folder
 const indexRouter = require('./routes/index');
@@ -25,7 +27,7 @@ app.use(expressLayouts);
 app.use(methodOverride('_method'));
 //where are public files will be
 app.use(express.static('public'));
-// app.use(bodyParser.urlencoded({ limit: '10mb', extended: false })); deprecated dont use
+//app.use(bodyParser.urlencoded({ limit: '10mb', extended: false })); deprecated dont use
 app.use(express.urlencoded({ limit: '10mb', extended: false }));
 
 //Set up mongoose
@@ -42,6 +44,18 @@ db.once('open', () => console.log('Connected to Mongoose'));
 app.use('/', indexRouter);
 app.use('/authors', authorRouter);
 app.use('/books', bookRouter);
+
+const Author = require('./models/author');
+const Book = require('./models/book');
+//Setting a cron job to run at 11:59pm everyday
+cron.schedule('10 * * * * *', () => {
+  //Remove all authors not apart of the demo
+  const updateAuthor = Author.deleteMany({ isDemo: false });
+  updateAuthor.then(() => console.log('Deleted Non Demo Authors'));
+  //Remove all books not apart of the demo
+  const updateBook = Book.deleteMany({ isDemo: false });
+  updateBook.then(() => console.log('Deleted Non Demo Books'));
+});
 
 //setting deployed and development port
 app.listen(process.env.PORT || 3000);
