@@ -48,7 +48,7 @@ app.use('/books', bookRouter);
 const Author = require('./models/author');
 const Book = require('./models/book');
 //Setting a cron job to run at 11:59pm everyday
-cron.schedule('10 * * * * *', () => {
+cron.schedule('59 23 * * *', () => {
   //Remove all authors not apart of the demo
   const updateAuthor = Author.deleteMany({ isDemo: false });
   updateAuthor.then(() => console.log('Deleted Non Demo Authors'));
